@@ -10,9 +10,10 @@ public class Ball
     private Vector2 _position;
     private Vector2 _ballDirection;
     private Game _game;
-    bool outOfBounds = false;
+    private bool _outOfBounds = false;
 
     public Vector2 BallDirection { get => _ballDirection; }
+    public bool OutOfBounds { get => _outOfBounds; }
 
     public Ball(Game game, Texture2D texture)
     {
@@ -28,8 +29,7 @@ public class Ball
         _position.X = (viewport.Width / 2) - (_texture.Width / 2);
 
         _ballDirection = new Vector2(SPEED);
-       
-        outOfBounds = false;
+        _outOfBounds = false;
     }
 
     // Verificando a coalisão da bola com as barras
@@ -68,7 +68,7 @@ public class Ball
         // Coalisão da bola com as barras
         if ( _position.X + _texture.Width < 0 || _position.X > viewport.Width)
         {
-            outOfBounds = true;
+            _outOfBounds = true;
             _ballDirection = Vector2.Zero;
         }
     }

@@ -20,6 +20,8 @@ public class Game1 : Game
 
     private Ball _ball;
     private Texture2D _ballTexture;
+    private Texture2D _goalTexture;
+    private Point _centerScreen;
 
     public Game1()
     {
@@ -44,6 +46,8 @@ public class Game1 : Game
 
         _ball = new Ball(this, _ballTexture);
         _ball.SetStartPosition();
+
+        _centerScreen = new Point(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
     }
 
     protected override void LoadContent()
@@ -54,6 +58,7 @@ public class Game1 : Game
         _background = Content.Load<Texture2D>("assets/background");
         _barTexture = Content.Load<Texture2D>("assets/bar");
         _ballTexture = Content.Load<Texture2D>("assets/ball");
+        _goalTexture = Content.Load<Texture2D>("assets/goal");
 
     }
 
@@ -63,6 +68,13 @@ public class Game1 : Game
             Exit();
         
         // TODO: Add your update logic here
+        if (_ball.OutOfBounds)
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                _ball.SetStartPosition();
+            }
+        }
         _bar1.Update();
         _bar2.Update();
         _ball.Update();
@@ -84,6 +96,12 @@ public class Game1 : Game
         _bar1.Draw(_spriteBatch);
         _bar2.Draw(_spriteBatch);
         _ball.Draw(_spriteBatch);
+        if (_ball.OutOfBounds)
+        {
+            _spriteBatch.Draw(
+                _goalTexture,
+                new Vector2(_centerScreen.X - _goalTexture.Width / 2, _centerScreen.Y - _goalTexture.Height / 2), Color.White);
+        }
 
         _spriteBatch.End();
 
