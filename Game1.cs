@@ -33,7 +33,7 @@ public class Game1 : Game
         // TODO: Add your initialization logic here
         base.Initialize();
 
-       /* _bar2PositionX = _graphics.PreferredBackBufferWidth - _barTexture.Width;
+       _bar2PositionX = _graphics.PreferredBackBufferWidth - _barTexture.Width;
         _bar2PositionY = (_graphics.PreferredBackBufferHeight - _barTexture.Height) / 2.0f;
 
         _bar1PositionY = (_graphics.PreferredBackBufferHeight - _barTexture.Height) / 2.0f;
@@ -43,7 +43,7 @@ public class Game1 : Game
         _bar2 = new Bar(this, new Vector2(_bar2PositionX, _bar2PositionY), _barTexture, Keys.Up, Keys.Down);
 
         _ball = new Ball(this, _ballTexture);
-        _ball.SetStartPosition();*/
+        _ball.SetStartPosition();
     }
 
     protected override void LoadContent()
@@ -54,12 +54,6 @@ public class Game1 : Game
         _background = Content.Load<Texture2D>("assets/background");
         _barTexture = Content.Load<Texture2D>("assets/bar");
         _ballTexture = Content.Load<Texture2D>("assets/ball");
-
-        _bar1 = new Bar(this, new Vector2(10, 100), _barTexture, Keys.W, Keys.S);
-        _bar2 = new Bar(this, new Vector2(760, 100), _barTexture, Keys.Up, Keys.Down);
-
-        _ball = new Ball(this, _ballTexture);
-        _ball.SetStartPosition();
 
     }
 

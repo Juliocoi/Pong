@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace Pong.Model;
 
@@ -12,8 +10,7 @@ public class Ball
     private Vector2 _position;
     private Vector2 _ballDirection;
     private Game _game;
-    bool outOfLimites = false;
-    Random _random;
+    bool outOfBounds = false;
 
     public Vector2 BallDirection { get => _ballDirection; }
 
@@ -26,21 +23,13 @@ public class Ball
     public void SetStartPosition()
     {
         var viewport = _game.GraphicsDevice.Viewport;
-        _random = new Random();
 
         _position.Y = (viewport.Height / 2) - (_texture.Height / 2);
         _position.X = (viewport.Width / 2) - (_texture.Width / 2);
 
-        /*_ballDirection = new Vector2(GetRandom());
-        _ballDirection.Normalize();*/
-
         _ballDirection = new Vector2(SPEED);
-        outOfLimites = false;
-    }
-
-    private float GetRandom()
-    {
-        return (_random.NextSingle() * 2.0f) - 1.0f;
+       
+        outOfBounds = false;
     }
 
     // Verificando a coalisão da bola com as barras
@@ -59,10 +48,7 @@ public class Ball
     public void Update()
     {
         var viewport = _game.GraphicsDevice.Viewport;
-        //Movimentação da bola
-        //_position += _ballDirection + (_ballDirection * SPEED);
-        _position += _ballDirection;
-
+        
         // Coalisão da bola com os limites verticais
         if (_position.Y < 0)
         {
@@ -72,13 +58,17 @@ public class Ball
         if (_position.Y + _texture.Height > viewport.Height)
         {
             _position.Y = viewport.Height - _texture.Height;
-            _ballDirection.Y = -1;
+            _ballDirection.Y *= -1;
         }
 
+        //Movimentação da bola
+        
+        _position += _ballDirection;
+
         // Coalisão da bola com as barras
-        if( _position.X + _texture.Width < 0 || _position.X > viewport.Width )
+        if ( _position.X + _texture.Width < 0 || _position.X > viewport.Width)
         {
-            outOfLimites = true;
+            outOfBounds = true;
             _ballDirection = Vector2.Zero;
         }
     }
